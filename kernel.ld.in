@@ -1,0 +1,35 @@
+#define BOOTADDR 0x1000
+
+OUTPUT_FORMAT("elf32-littlearm")
+OUTPUT_ARCH(arm)
+
+ENTRY(_entry)
+SECTIONS {
+  . = BOOTADDR;
+
+  .text : {
+    *(.text)
+  }
+
+  . = ALIGN(4);
+  .rodata : {
+    *(.rodata)
+  }
+  .rdata : {
+    *(.rdata)
+  }
+  .data : {
+    *(.data)
+  }
+
+  . = ALIGN(4);
+  _edata = .;
+
+  .bss : {
+    *(.bss)
+    *(COMMON)
+  }
+
+  . = ALIGN(4);
+  _end = .;
+}
