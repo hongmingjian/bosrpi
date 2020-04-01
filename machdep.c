@@ -66,7 +66,7 @@ void cstart(void)
 	char *where = (char *)LOADADDR;
 	init_uart(115200);
 
-	puts("** Boot over serial for Raspberry PI\r\n");
+	puts("** Boot over Serial for Raspberry PI\r\n");
 	puts("** Copyright (C) 2005,2020 Hong MingJian<hongmingjian@gmail.com>\r\n");
 	puts("** All rights reserved.\r\n\r\n");
 
