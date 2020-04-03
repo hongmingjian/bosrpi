@@ -23,11 +23,10 @@ If a received file has the name of (in the first line of uuencoded data)
 ## How to use?
 - Download [kernel.img](https://github.com/hongmingjian/bosrpi/releases/download/v0.1/kernel.img) and copy it to the SD card. Or you can compile it from the source which is self-containing.
 - Turnon your RPi.
-- Uuencode your kernel.img by issuing `uuencode kernel.img kernel.img >kernel.uue` and send the file kernel.uue by Xmodem using minicom/screen/ExtraPutty/etc to boot RPi from your kernel.img.
-- Uuencode other.bin by issuing `uuencode other.bin other.bin >other.uue` and send the file other.uue by Xmodem using minicom/screen/ExtraPutty/etc to save other.bin to the FAT file system on the SD card.
+- Uuencode your kernel.img by issuing `uuencode kernel.img kernel.img >kernel.uue` and send the file kernel.uue by Xmodem using minicom/screen/ExtraPutty/etc to **boot RPi from your kernel.img**.
+- Uuencode other.bin by issuing `uuencode other.bin other.bin >other.uue` and send the file other.uue by Xmodem using minicom/screen/ExtraPutty/etc to **save other.bin to the FAT file system on the SD card**.
 
 ## Misc.
 - The UART is on GPIO pin 14(TxD) and 15(RxD) and is initialized to 115200 8N1.
 - I have only tested this program on RPi 1B and 1B+.
 - The file name in the first line of uuencoded data cannot have more than 15 characters.
-
