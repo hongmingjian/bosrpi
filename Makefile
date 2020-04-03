@@ -20,9 +20,9 @@ PROG=    kernel
 CPPFLAGS+=-nostdinc -I.
 ASFLAGS=-Wall -O2
 CFLAGS+=-Wall -O2 -ffreestanding -fleading-underscore
-LDFLAGS+=-Tkernel.ld -nostdlib
+LDFLAGS+=-T$(PROG).ld -nostdlib
 
-COBJS=machdep.o uudecode.o xmodem.o softfloat.o
+COBJS=machdep.o uudecode.o xmodem.o softfloat.o string.o sdcard.o dosfs.o
 
 OBJS=entry.o $(COBJS)
 
@@ -31,10 +31,10 @@ all: $(PROG).img
 $(PROG).img: $(PROG).elf
 	$(OBJCOPY) $^ -O binary $@
 
-$(PROG).elf: kernel.ld $(OBJS)
+$(PROG).elf: $(PROG).ld $(OBJS)
 	$(CC) $(LDFLAGS) $(OBJS) -o $@
 
-kernel.ld: kernel.ld.in
+$(PROG).ld: $(PROG).ld.in
 	$(CC) -E -P -x c-header -o $@ $^
 
 clean:

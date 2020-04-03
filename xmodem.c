@@ -37,7 +37,7 @@ get_frame(struct frame *rframe)
 }
 
 int
-xmodem(char *p)
+xmodem(unsigned char *p)
 {
   struct frame aframe;
   int i, len = 0;

@@ -81,4 +81,52 @@ typedef struct {
 	volatile unsigned int gppudclk1;
 } gpio_reg_t;
 
+#define SYSTIMER_REG (0x3000)
+typedef struct {
+	volatile unsigned int cs;
+	volatile unsigned int clo;
+	volatile unsigned int chi;
+	volatile unsigned int c0;
+	volatile unsigned int c1;
+	volatile unsigned int c2;
+	volatile unsigned int c3;
+} systimer_reg_t;
+
+#define EMMC_REG (0x300000)
+typedef struct {
+	volatile unsigned int arg2;
+	volatile unsigned int blksizecnt;
+	volatile unsigned int arg1;
+	volatile unsigned int cmdtm;
+	volatile unsigned int resp0;
+	volatile unsigned int resp1;
+	volatile unsigned int resp2;
+	volatile unsigned int resp3;
+	volatile unsigned int data;
+	volatile unsigned int status;
+	volatile unsigned int control0;
+	volatile unsigned int control1;
+	volatile unsigned int interrupt;
+	volatile unsigned int irpt_mask;
+	volatile unsigned int irpt_en;
+	volatile unsigned int control2;
+	volatile unsigned int capabilities_0;
+	volatile unsigned int capabilities_1;
+	volatile unsigned int UNUSED1[2];
+	volatile unsigned int force_irpt;
+	volatile unsigned int UNUSED2[7];
+	volatile unsigned int boot_timeout;
+	volatile unsigned int dbg_sel;
+	volatile unsigned int UNUSED3[2];
+	volatile unsigned int exrdfifo_cfg;
+	volatile unsigned int exrdfifo_en;
+	volatile unsigned int tune_step;
+	volatile unsigned int tune_steps_std;
+	volatile unsigned int tune_steps_ddr;
+	volatile unsigned int UNUSED4[23];
+	volatile unsigned int spi_int_spt;
+	volatile unsigned int UNUSED5[2];
+	volatile unsigned int slotisr_ver;
+} emmc_reg_t;
+
 #endif /* _CPU_H */

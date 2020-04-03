@@ -5,37 +5,39 @@
  * Copyright (C) 2007 Hong MingJian
  *
  */
-
-int strncmp(const char *cs, const char *ct, unsigned int count)
-{
-	 unsigned char c1, c2;
-
-	 while (count) {
-		 c1 = *cs++;
-		 c2 = *ct++;
-		 if (c1 != c2)
-			 return c1 < c2 ? -1 : 1;
-		 if (!c1)
-			 break;
-		 count--;
-	 }
-	 return 0;
-}
+#include <string.h>
 
 #define DEC(c)  (((c) - ' ') & 077)
 
-int uudecode (char *where)
+int uudecode (unsigned char *where, char *filename)
 {
-	char *p, *out;
+	char *p;
+	unsigned char *out;
 	p = out = where;
 
 	{
+		int i;
 		char *q;
 		do {
 			q = p;
 			while(*p++ != '\n')
 				;
-		} while(strncmp(q, "begin", 5));
+		} while(strncmp(q, "begin ", 6));
+
+		q += 6; //skip "begin "
+
+		while(*q != ' ') q++; //skip mode
+		                 q++; //skip space
+
+		i = 0;
+		while(*q != '\r' && *q != '\n') {
+			filename[i] = *q;
+			q++;
+			i++;
+			if(i == 15)
+				break;
+		}
+		filename[i] = 0;
 	}
 
 	while (1) {
@@ -88,6 +90,7 @@ int main()
 	FILE *fp;
 	long size;
 	char *buf;
+	char filename[16];
 
 
 	fprintf(stdout, "\\n=%x, \\r=%x\n", '\n', '\r');
@@ -123,7 +126,7 @@ int main()
 		return 1;
 	}
 
-	size = uudecode(buf);
+	size = uudecode(buf, filename);
 	fwrite(buf, 1, size, fp);
 
 	fprintf(stdout, "%d bytes decoded.\n", size);

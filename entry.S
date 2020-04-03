@@ -37,3 +37,12 @@ zeroify.1:
 trampoline:
 	sub lr, lr, #(LOADADDR-BOOTADDR)
 	bx lr
+
+	.globl	___aeabi_idivmod
+___aeabi_idivmod:
+	stmfd	sp!, {r0, r1, ip, lr}
+	bl	___aeabi_idiv
+	ldmfd	sp!, {r1, r2, ip, lr}
+	mul	r3, r0, r2
+	sub	r1, r1, r3
+	mov	pc, lr
