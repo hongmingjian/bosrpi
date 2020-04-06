@@ -63,7 +63,6 @@ void puts(char *s)
   }
 }
 
-__attribute__((noreturn))
 void cstart(void)
 {
     unsigned char *where = (unsigned char *)LOADADDR;
@@ -84,10 +83,10 @@ void cstart(void)
     }
 
     if(!sdosfs)
-        puts("!! WARNING: cannot write FAT file system on the SD card!\r\n");
+        puts("!! WARNING: cannot save files to FAT on SD card!\r\n");
 
     do {
-        puts(">> Send a uuencoded file using Xmodem protocol ...\r\n");
+        puts(">> Send a uuencoded file using Xmodem ...\r\n");
 
         while(sys_haschar())
             sys_getchar();
@@ -96,7 +95,6 @@ void cstart(void)
             char filename[16];
             int size = uudecode(where, filename);
             if(strncmp(filename, "kernel.img", 10) == 0) {
-                ((void (*)(void))where)();
                 break;
             } else {
                 if(sdosfs) {
@@ -124,9 +122,4 @@ void cstart(void)
             puts(">> Failed to receive\r\n");
         }
     } while(1);
-
-    puts(">> Failed to boot!\r\n");
-
-    while(1)
-        ;
 }

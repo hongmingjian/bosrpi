@@ -29,7 +29,7 @@ OBJS=entry.o $(COBJS)
 all: $(PROG).img
 
 $(PROG).img: $(PROG).elf
-	$(OBJCOPY) $^ -O binary $@
+	$(OBJCOPY) -S $^ -O binary $@
 
 $(PROG).elf: $(PROG).ld $(OBJS)
 	$(CC) $(LDFLAGS) $(OBJS) -o $@

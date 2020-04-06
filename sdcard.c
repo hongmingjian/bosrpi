@@ -334,8 +334,10 @@ static EMMCCommand sdCommandTable[] =
 #define IX_SET_CLR_DET      37
 #define IX_SEND_SCR         38
 
+/*
 static const char* STATUS_NAME[] =
   { "idle", "ready", "identify", "standby", "transmit", "data", "receive", "prog", "dis" };
+*/
 
 // CSD flags
 // Note: all flags are shifted down by 8 bits as the CRC is not included.
@@ -454,11 +456,12 @@ static const char* STATUS_NAME[] =
 #define SD_TYPE_2_SC 3
 #define SD_TYPE_2_HC 4
 
+/*
 static const char* SD_TYPE_NAME[] =
   {
   "Unknown", "MMC", "Type 1", "Type 2 SC", "Type 2 HC"
   };
-
+*/
 // SD card functions supported values.
 #define SD_SUPP_SET_BLOCK_COUNT 0x80000000
 #define SD_SUPP_SPEED_CLASS     0x40000000

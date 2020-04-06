@@ -21,6 +21,7 @@ memcmp(const void *b1, const void *b2, size_t len)
 	return len;
 }
 
+/*
 void *memmove(void *dest, const void *src, size_t count)
 {
 	char *tmp;
@@ -62,6 +63,7 @@ strcat(char *s, const char *append)
 	while((*s++ = *append++) != 0);
 	return(save);
 }
+*/
 
 int
 strcmp(const char *s1, const char *s2)
@@ -87,7 +89,7 @@ int strncmp(const char *cs, const char *ct, size_t count)
 	 }
 	 return 0;
 }
-
+/*
 char *strchr(const char *s, int c)
 {
 	for (; *s != (char)c; ++s)
@@ -122,6 +124,7 @@ char *strstr(const char *s1, const char *s2)
 	}
 	return NULL;
 }
+*/
 
 char *
 strcpy(char *to, const char *from)
