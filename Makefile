@@ -35,7 +35,7 @@ $(PROG).elf: $(PROG).ld $(OBJS)
 	$(CC) $(LDFLAGS) $(OBJS) -o $@
 
 $(PROG).ld: $(PROG).ld.in
-	$(CC) -E -P -x c-header -o $@ $^
+	$(CC) $(CPPFLAGS) -E -P -x c-header -o $@ $^
 
 clean:
 	-$(RM) $(OBJS) $(PROG).{ld,img,elf}

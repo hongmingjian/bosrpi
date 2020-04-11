@@ -14,7 +14,7 @@ If you are developing programs for bare metal RPi. You should be stuck in the fo
 ## What's this?
 This small program comes to save your time by booting RPi over serial.
 
-After loaded by SoC to 0x8000, it relocates itself to 0x4000 and waits to receive uuencoded files over serial/UART/COM using Xmodem protocol. It will write received data to 0x8000 and decode uuencoded data in-place.
+After loaded by SoC to 0x8000, it relocates itself to 0x3000 and waits to receive uuencoded files over serial/UART/COM using Xmodem protocol. It will write received data to 0x8000 and decode uuencoded data in-place.
 
 If a received file has the name of (in the first line of uuencoded data)
 - kernel.img: It will transfer the control to 0x8000 and boot uudecoded kernel.img.
@@ -28,6 +28,6 @@ If a received file has the name of (in the first line of uuencoded data)
 
 ## Notes
 - The UART is on GPIO pin 14(TxD) and 15(RxD) and is initialized to 115200 8N1.
-- This bootloader preserves {r0-r3} from start.elf. And it uses a stack, which is in 0x4000 and grows downward.
-- I have only tested this program on RPi 1B and 1B+.
+- This bootloader preserves {r0-r3} from start.elf. And it uses a stack, which is in 0x8000 and grows downward.
+- I have only tested this program on RPi 1B, 1B+ and 3B+.
 - The file name in the first line of uuencoded data cannot have more than 15 characters.

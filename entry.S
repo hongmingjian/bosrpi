@@ -1,5 +1,6 @@
-#define LOADADDR       0x8000
-#define BOOTADDR       0x4000
+#include "config.h"
+
+#define CPUID_BCM2835  0x410FB767
 
     .extern _cstart
     .extern _edata, _end
@@ -7,7 +8,25 @@
     .text
     .globl _entry
 _entry:
-    mov sp, #BOOTADDR
+    mrc p15, 0, r12, c0, c0, 0
+    ldr r11, =CPUID_BCM2835
+    cmp r11, r12
+    beq bcm2835
+
+    ;@shutdown other cores
+    mrc p15, #0, r12, c0, c0, #5
+    and r12, r12, #3
+    cmp r12, #0
+    bne .
+
+    mov r11, #0x3f000000
+    b start
+    
+bcm2835:
+    mov r11, #0x20000000
+
+start:
+    mov sp, #LOADADDR
     push {r0-r2}
 
     mov r0, #LOADADDR
@@ -22,14 +41,17 @@ copy:
     bne copy
 
     bl trampoline
-
+    
+    ldr r12, =_MMIO_BASE_PA
+    str r11, [r12]
+    
     @zeroify bss
     ldr r0, =_edata
     ldr r1, =_end
     ldr r2, =0x0
 zeroify:
-    cmp	r1, r0
-    ble	zeroify.1
+    cmp r1, r0
+    ble zeroify.1
     stmia r0!, {r2}
     b zeroify
 zeroify.1:
@@ -41,6 +63,10 @@ zeroify.1:
 trampoline:
     sub lr, lr, #(LOADADDR-BOOTADDR)
     bx lr
+
+    .globl _MMIO_BASE_PA
+_MMIO_BASE_PA:
+    .long 0
 
     .globl ___aeabi_idivmod
 ___aeabi_idivmod:
