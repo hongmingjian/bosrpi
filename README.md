@@ -29,5 +29,5 @@ If a received file has the name of (in the first line of uuencoded data)
 ## Notes
 - The UART is on GPIO pin 14(TxD) and 15(RxD) and is initialized to 115200 8N1.
 - This bootloader preserves {r0-r3} from start.elf. And it uses a stack, which is in 0x8000 and grows downward.
-- I have only tested this program on RPi 1B, 1B+ and 3B+.
+- I have only tested this program on RPi 1B, 1B+(V1.2) and 3B+.
 - The file name in the first line of uuencoded data cannot have more than 15 characters.

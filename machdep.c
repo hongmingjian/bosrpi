@@ -75,7 +75,15 @@ void cstart(void)
 		MMIO_BASE_PA = 0x3f000000;
 
     init_uart(115200);
-
+    
+    {
+		char *p = (char *)&cpuid;
+		sys_putchar(*p++);
+		sys_putchar(*p++);
+		sys_putchar(*p++);
+		sys_putchar(*p);
+	}
+	
     puts("** Boot over Serial for Raspberry Pi\r\n");
     puts("** Built at " __DATE__ " " __TIME__ "\r\n\r\n");
 
@@ -107,10 +115,10 @@ void cstart(void)
             } else {
                 if(sdosfs) {
                     FILEINFO fi;
-                    uint32_t nwritten = 0;
+                    uint32_t nbyte = 0;
                     if((DFS_OK == DFS_OpenFile(&volinfo, filename, DFS_WRITE, scratch, &fi)) &&
-                       (DFS_OK == DFS_WriteFile(&fi, scratch, where, &nwritten, size)) &&
-                       (nwritten == size)) {
+                       (DFS_OK == DFS_WriteFile(&fi, scratch, where, &nbyte, size)) &&
+                       (nbyte == size)) {
                         puts(">> Saved to ");
                         puts(filename);
                         puts(".\r\n");
