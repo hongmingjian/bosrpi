@@ -5,6 +5,7 @@
 #include "cpu.h"
 #include "dosfs.h"
 
+uint32_t cpuid;
 uint32_t MMIO_BASE_PA;
 
 static void init_uart(uint32_t baud)

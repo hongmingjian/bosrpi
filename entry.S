@@ -4,6 +4,7 @@
 
     .extern _cstart
     .extern _edata, _end
+    .extern _cpuid
 
     .text
     .globl _entry
@@ -36,10 +37,7 @@ copy:
 
     bl trampoline
 
-    ldr r0, =_cpuid
-    str r12, [r0]
-
-    @zeroify bss
+    ;@zeroify bss
     ldr r0, =_edata
     ldr r1, =_end
     ldr r2, =0x0
@@ -50,6 +48,10 @@ zeroify:
     b zeroify
 zeroify.1:
 
+	;@must be after zeroifying bss
+    ldr r0, =_cpuid
+    str r12, [r0]
+
     bl _cstart
     pop {r0-r2}
     ldr pc, =(LOADADDR)
@@ -57,10 +59,6 @@ zeroify.1:
 trampoline:
     sub lr, lr, #(LOADADDR-BOOTADDR)
     bx lr
-
-	.globl _cpuid
-_cpuid:
-	.4byte 0
 
     .globl ___aeabi_idivmod
 ___aeabi_idivmod:
