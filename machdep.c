@@ -5,6 +5,8 @@
 #include "cpu.h"
 #include "dosfs.h"
 
+uint32_t MMIO_BASE_PA;
+
 static void init_uart(uint32_t baud)
 {
     aux_reg_t *aux = (aux_reg_t *)(MMIO_BASE_PA+AUX_REG);
@@ -66,6 +68,12 @@ void puts(char *s)
 void cstart(void)
 {
     unsigned char *where = (unsigned char *)LOADADDR;
+
+    if(cpuid == CPUID_BCM2835)
+		MMIO_BASE_PA = 0x20000000;
+	else
+		MMIO_BASE_PA = 0x3f000000;
+
     init_uart(115200);
 
     puts("** Boot over Serial for Raspberry Pi\r\n");

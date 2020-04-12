@@ -6,6 +6,11 @@
 #define LOADADDR        0x8000
 #define SYS_CLOCK_FREQ	250000000UL
 
+extern uint32_t cpuid;
+#define CPUID_BCM2835 0x410FB767
+#define CPUID_BCM2836 0x410FC073
+#define CPUID_BCM2837 0x410FD034
+
 extern uint32_t MMIO_BASE_PA;
 
 #define AUX_REG (0x215000)

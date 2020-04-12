@@ -8,22 +8,16 @@
     .text
     .globl _entry
 _entry:
-    mrc p15, 0, r12, c0, c0, 0
+    mrc p15, #0, r12, c0, c0, #0
     ldr r11, =CPUID_BCM2835
     cmp r11, r12
-    beq bcm2835
+    beq start
 
     ;@shutdown other cores
-    mrc p15, #0, r12, c0, c0, #5
-    and r12, r12, #3
-    cmp r12, #0
+    mrc p15, #0, r11, c0, c0, #5
+    and r11, r11, #3
+    cmp r11, #0
     bne .
-
-    mov r11, #0x3f000000
-    b start
-    
-bcm2835:
-    mov r11, #0x20000000
 
 start:
     mov sp, #LOADADDR
@@ -41,10 +35,10 @@ copy:
     bne copy
 
     bl trampoline
-    
-    ldr r12, =_MMIO_BASE_PA
-    str r11, [r12]
-    
+
+    ldr r0, =_cpuid
+    str r12, [r0]
+
     @zeroify bss
     ldr r0, =_edata
     ldr r1, =_end
@@ -64,9 +58,9 @@ trampoline:
     sub lr, lr, #(LOADADDR-BOOTADDR)
     bx lr
 
-    .globl _MMIO_BASE_PA
-_MMIO_BASE_PA:
-    .long 0
+	.globl _cpuid
+_cpuid:
+	.4byte 0
 
     .globl ___aeabi_idivmod
 ___aeabi_idivmod:
