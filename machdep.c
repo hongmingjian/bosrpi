@@ -66,27 +66,51 @@ void puts(char *s)
   }
 }
 
+/**
+ * From https://github.com/dwelch67
+ */
+void puth ( unsigned int d )
+{
+    unsigned int ra = 0;
+    unsigned int rb;
+    unsigned int rc;
+
+    rb=32;
+    while(1) {
+        rb-=4;
+        rc=(d>>rb)&0xF;
+        if(rc || ra) {
+			if(rc>9) rc+=0x37; else rc+=0x30;
+			sys_putchar(rc);
+			ra = 1;
+        }
+        if(rb==0) {
+			if(ra == 0)
+				sys_putchar('0');
+			break;
+		}
+    }
+}
+
 void cstart(void)
 {
     unsigned char *where = (unsigned char *)LOADADDR;
+	uint32_t core;
 
     if(cpuid == CPUID_BCM2835)
 		MMIO_BASE_PA = 0x20000000;
-	else
+	else {
+		__asm__ __volatile__("mrc p15, #0, %0, c0, c0, #5":"=r"(core));
 		MMIO_BASE_PA = 0x3f000000;
+	}
 
     init_uart(115200);
-    
-    {
-		char *p = (char *)&cpuid;
-		sys_putchar(*p++);
-		sys_putchar(*p++);
-		sys_putchar(*p++);
-		sys_putchar(*p);
-	}
 	
     puts("** Boot over Serial for Raspberry Pi\r\n");
-    puts("** Built at " __DATE__ " " __TIME__ "\r\n\r\n");
+    puts("** Built at " __DATE__ " " __TIME__ "\r\n");
+	puts("** CPU");(cpuid==CPUID_BCM2835)?NULL:puth(core&3);
+	puts(": 0x");puth(cpuid);
+	puts("\r\n");
 
     VOLINFO volinfo;
     unsigned char scratch[512];

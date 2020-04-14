@@ -1,7 +1,5 @@
 #include "config.h"
 
-#define CPUID_BCM2835  0x410FB767
-
     .extern _cstart
     .extern _edata, _end
     .extern _cpuid
@@ -9,18 +7,9 @@
     .text
     .globl _entry
 _entry:
+	;@read cpuid
     mrc p15, #0, r12, c0, c0, #0
-    ldr r11, =CPUID_BCM2835
-    cmp r11, r12
-    beq start
 
-    ;@shutdown other cores
-    mrc p15, #0, r11, c0, c0, #5
-    and r11, r11, #3
-    cmp r11, #0
-    bne .
-
-start:
     mov sp, #LOADADDR
     push {r0-r2}
 
