@@ -8,7 +8,7 @@
 
 extern uint32_t cpuid;
 #define CPUID_BCM2835 0x410FB767
-#define CPUID_BCM2836 0x410FC073
+#define CPUID_BCM2836 0x410FC075
 #define CPUID_BCM2837 0x410FD034
 
 extern uint32_t MMIO_BASE_PA;
