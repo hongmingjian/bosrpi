@@ -21,7 +21,7 @@ If a received file has the name of (in the first line of uuencoded data)
 -  otherwise: It will save uudecoded file to the FAT file system on the SD card and wait to receive the next one.
 
 ## How to use?
-- Download [kernel.img](https://github.com/hongmingjian/bosrpi/releases/download/v1.0/kernel.img) and copy it to the SD card. Or you can compile it from the source which is self-contained.
+- Download [kernel.img](https://github.com/hongmingjian/bosrpi/releases/download/v1.1/kernel.img) and copy it to the SD card. Or you can compile it from the source which is self-contained.
 - Turnon your RPi.
 - Uuencode your kernel.img by issuing `uuencode kernel.img kernel.img >kernel.uue` and send the file kernel.uue by Xmodem using minicom/screen/ExtraPutty/etc to **boot RPi from your kernel.img**.
 - Uuencode other.bin by issuing `uuencode other.bin other.bin >other.uue` and send the file other.uue by Xmodem using minicom/screen/ExtraPutty/etc to **save other.bin to the FAT file system on the SD card**.
