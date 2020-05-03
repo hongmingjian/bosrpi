@@ -12,10 +12,10 @@ If a received file has the name of (in the first line of uuencoded data)
 - Turnon your RPi.
 - Uuencode your kernel.img by issuing  
           `uuencode kernel.img kernel.img >kernel.img.uue`  
-  and send the file kernel.img.uue by Xmodem using minicom/screen/ExtraPutty/etc to **boot** RPi from kernel.img.
+  and send the file kernel.img.uue using minicom/screen/ExtraPutty/etc to **boot** from kernel.img.
 - Uuencode other.bin by issuing  
            `uuencode other.bin other.bin >other.bin.uue`  
-  and send the file other.bin.uue by Xmodem using minicom/screen/ExtraPutty/etc to **save** other.bin to the FAT file system on the SD card.
+  and send the file other.bin.uue using minicom/screen/ExtraPutty/etc to **save** other.bin to the FAT file system on the SD card.
 
 ## Notes
 - The UART is on GPIO pin 14(TxD) and 15(RxD) and is initialized to 115200 8N1.
