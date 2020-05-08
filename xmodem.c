@@ -59,17 +59,21 @@ xmodem(unsigned char *p)
       case XMODEM_SOH:
 				get_frame(&aframe);
 
-				if((aframe.blknumcompl == 255 - aframe.blknum) &&
-				   (cksum(&aframe) == aframe.cksum)) {
+				/*
+				 * XXX - It seems that SecureCRT can only send ASCII chars.
+				 *       Don't verify block number and checksum.
+				 */
+				/*if((aframe.blknumcompl == 255 - aframe.blknum) &&
+				   (cksum(&aframe) == aframe.cksum))*/ {
 				    len += XMODEM_DATA_SIZE;
 
 				    for(i = 0; i < XMODEM_DATA_SIZE; i++)
 				      *p++ = aframe.data[i];
 
 				    sys_putchar(XMODEM_ACK);
-				} else {
+				}/* else {
 				    sys_putchar(XMODEM_NAK);
-				}
+				}*/
 				break;
 
       case XMODEM_EOT:
